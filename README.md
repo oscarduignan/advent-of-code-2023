@@ -18,3 +18,16 @@ Compiled project (Scala 3.3.1, JVM (11))
 Part 1: 55123
 Part 2: 55260
 ```
+
+## Day 2
+Figured it would be some thing across columns rather than rows, didn't bother filling in blanks when a row didn't have a draw of a colour and turned out I didn't need to anyway.
+
+```shell
+scala-cli day02.sc
+```
+```
+Compiling project (Scala 3.3.1, JVM (11))
+Compiled project (Scala 3.3.1, JVM (11))
+Part 1: 2256
+Part 2: 74229
+```
