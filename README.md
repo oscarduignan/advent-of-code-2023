@@ -31,3 +31,65 @@ Compiled project (Scala 3.3.1, JVM (11))
 Part 1: 2256
 Part 2: 74229
 ```
+
+## Day 3
+Got stuck on this where I wasn't handling lines that ended with digits correctly :oof:
+
+```shell
+scala-cli day03.sc
+```
+```
+Example: ParsedInput(
+  symbols = List(
+    ('*', (1, 3)),
+    ('#', (3, 6)),
+    ('*', (4, 3)),
+    ('+', (5, 5)),
+    ('$', (8, 3)),
+    ('*', (8, 5))
+  ),
+  numbers = List(
+    Number(number = 467, coords = List((0, 0), (0, 1), (0, 2))),
+    Number(number = 114, coords = List((0, 5), (0, 6), (0, 7))),
+    Number(number = 35, coords = List((2, 2), (2, 3))),
+    Number(number = 633, coords = List((2, 6), (2, 7), (2, 8))),
+    Number(number = 1, coords = List((3, 10))),
+    Number(number = 617, coords = List((4, 0), (4, 1), (4, 2))),
+    Number(number = 58, coords = List((5, 7), (5, 8))),
+    Number(number = 592, coords = List((6, 2), (6, 3), (6, 4))),
+    Number(number = 755, coords = List((7, 6), (7, 7), (7, 8))),
+    Number(number = 664, coords = List((9, 1), (9, 2), (9, 3))),
+    Number(number = 598, coords = List((9, 5), (9, 6), (9, 7)))
+  )
+)
+Example: parts = List(
+  Number(number = 467, coords = List((0, 0), (0, 1), (0, 2))),
+  Number(number = 35, coords = List((2, 2), (2, 3))),
+  Number(number = 633, coords = List((2, 6), (2, 7), (2, 8))),
+  Number(number = 617, coords = List((4, 0), (4, 1), (4, 2))),
+  Number(number = 592, coords = List((6, 2), (6, 3), (6, 4))),
+  Number(number = 755, coords = List((7, 6), (7, 7), (7, 8))),
+  Number(number = 664, coords = List((9, 1), (9, 2), (9, 3))),
+  Number(number = 598, coords = List((9, 5), (9, 6), (9, 7)))
+)
+Example: gears = List(
+  (
+    ('*', (1, 3)),
+    List(
+      Number(number = 467, coords = List((0, 0), (0, 1), (0, 2))),
+      Number(number = 35, coords = List((2, 2), (2, 3)))
+    )
+  ),
+  (
+    ('*', (8, 5)),
+    List(
+      Number(number = 755, coords = List((7, 6), (7, 7), (7, 8))),
+      Number(number = 598, coords = List((9, 5), (9, 6), (9, 7)))
+    )
+  )
+)
+Part01 (example):   4361
+Part01 (my inputs): 539590
+Part02 (example):   467835
+Part02 (my inputs): 80703636
+```
