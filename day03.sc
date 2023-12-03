@@ -14,16 +14,20 @@ extension (cell: Cell)
   def value = cell._1
   def coord = cell._2
 
-case class Number(number: Int, coords: List[Coord]):
-  val neighbouringRows: Set[Int] =
+type Gear = (Cell, List[Number])
+extension (gear: Gear)
+  def ratio = gear._2.map(_.value).product
+
+case class Number(value: Int, coords: List[Coord]):
+  private val neighbouringRows: Set[Int] =
     coords.flatMap(coord => List(coord.x + 1, coord.x, coord.x - 1)).toSet
-  val neighbouringCols: Set[Int] =
+  private val neighbouringCols: Set[Int] =
     coords.flatMap(coord => List(coord.y + 1, coord.y, coord.y - 1)).toSet
   def isNeighbour(cell: Cell): Boolean =
     neighbouringRows.contains(cell.coord.x) &&
     neighbouringCols.contains(cell.coord.y)
 
-case class ParsedInput(symbols: List[Cell], numbers: List[Number]):
+case class Schematic(symbols: List[Cell], numbers: List[Number]):
   val parts = numbers.filter: number =>
       symbols.exists(number.isNeighbour)
   val gears = symbols
@@ -57,9 +61,9 @@ def cells(input: List[String]): List[Cell] =
   ).toList
 
 @tailrec
-def parse(input: List[Cell], symbolsFound: List[Cell] = Nil, numbersFound: List[Number] = Nil): ParsedInput =
+def parse(input: List[Cell], symbolsFound: List[Cell] = Nil, numbersFound: List[Number] = Nil): Schematic =
   if input.isEmpty then
-    ParsedInput(symbolsFound, numbersFound)
+    Schematic(symbolsFound, numbersFound)
   else
     val (digits, rest) = input.span(_.value.isDigit)
     val (chars, remainder) = rest.span(!_.value.isDigit)
@@ -87,13 +91,12 @@ pprint.pprintln(parsedExample.gears)
 val pwd = os.Path("/Users/madetech/projects/aoc/2023/scala")
 val input = parse(cells(os.read(pwd / "day03.input1.txt").linesIterator.toList))
 
-def part1(input: ParsedInput): Int = input.parts.map(_.number).sum
+def part1(schematic: Schematic): Int = schematic.parts.map(_.value).sum
 
 println("Part01 (example):   " + part1(parsedExample))
 println("Part01 (my inputs): " + part1(input))
 
-def part2(input: ParsedInput): Int =
-  input.gears.map(_._2.map(_.number).product).sum
+def part2(schematic: Schematic): Int = schematic.gears.map(_.ratio).sum
 
 println("Part02 (example):   " + part2(parsedExample))
 println("Part02 (my inputs): " + part2(input))
