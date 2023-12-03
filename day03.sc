@@ -14,19 +14,19 @@ extension (cell: Cell)
   def value = cell._1
   def coord = cell._2
 
-type Gear = (Cell, List[Number])
+type Gear = (Cell, Seq[Number])
 extension (gear: Gear) def ratio = gear._2.map(_.value).product
 
-case class Number(value: Int, coords: List[Coord]):
+case class Number(value: Int, coords: Seq[Coord]):
   private val neighbouringRows: Set[Int] =
-    coords.flatMap(coord => List(coord.x + 1, coord.x, coord.x - 1)).toSet
+    coords.flatMap(coord => Seq(coord.x + 1, coord.x, coord.x - 1)).toSet
   private val neighbouringCols: Set[Int] =
-    coords.flatMap(coord => List(coord.y + 1, coord.y, coord.y - 1)).toSet
+    coords.flatMap(coord => Seq(coord.y + 1, coord.y, coord.y - 1)).toSet
   def isNeighbour(cell: Cell): Boolean   =
     neighbouringRows.contains(cell.coord.x) &&
       neighbouringCols.contains(cell.coord.y)
 
-case class Schematic(symbols: List[Cell], numbers: List[Number]):
+case class Schematic(symbols: Seq[Cell], numbers: Seq[Number]):
   val parts = numbers.filter: number =>
     symbols.exists(number.isNeighbour)
   val gears = symbols
@@ -46,22 +46,21 @@ val example1 =
     |......755.
     |...$.*....
     |.664.598..
-    |""".stripMargin.trim.split("\n").toList
+    |""".stripMargin.trim.split("\n").toIndexedSeq
 
 // foolishly I turned my list of strings into a single list of cells and forgot to
 // handle the case where there's a number on the end of a line, so to fix this I
 // just append a period to the end of each line when flattening them into a list.
 // Changed other bits trying to spot my error and will leave those in, I'm sure
 // that it's totally over-engineered and inefficient but at least I got there 😅
-def cells(input: List[String]): List[Cell] =
+def cells(input: Seq[String]): Seq[Cell] =
   input.indices
     .flatMap: x =>
       (input(x) + ".").zipWithIndex.map: value =>
         value._1 -> (x, value._2)
-    .toList
 
 @tailrec
-def parse(input: List[Cell], symbolsFound: List[Cell] = Nil, numbersFound: List[Number] = Nil): Schematic =
+def parse(input: Seq[Cell], symbolsFound: Seq[Cell] = Nil, numbersFound: Seq[Number] = Nil): Schematic =
   if input.isEmpty then Schematic(symbolsFound, numbersFound)
   else
     val (digits, other)    = input.span(_.value.isDigit)
