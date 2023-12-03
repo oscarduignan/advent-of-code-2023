@@ -79,14 +79,14 @@ def parse(input: List[Cell], symbolsFound: List[Cell] = Nil, numbersFound: List[
 
 val parsedExample = parse(cells(example1))
 
-print("Example: ")
-pprint.pprintln(parsedExample)
-
-print("Example: parts = ")
-pprint.pprintln(parsedExample.parts)
-
-print("Example: gears = ")
-pprint.pprintln(parsedExample.gears)
+//print("Example: ")
+//pprint.pprintln(parsedExample)
+//
+//print("Example: parts = ")
+//pprint.pprintln(parsedExample.parts)
+//
+//print("Example: gears = ")
+//pprint.pprintln(parsedExample.gears)
 
 val pwd = os.Path("/Users/madetech/projects/aoc/2023/scala")
 val input = parse(cells(os.read(pwd / "day03.input1.txt").linesIterator.toList))
