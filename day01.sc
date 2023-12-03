@@ -52,7 +52,7 @@ val wordForDigit = Seq(
 
 def part2(input: List[String]): List[Int] =
   for
-    line <- input
+    line        <- input
     digitsInLine =
       line.zipWithIndex
         .flatMap:

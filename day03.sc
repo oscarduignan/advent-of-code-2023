@@ -15,21 +15,20 @@ extension (cell: Cell)
   def coord = cell._2
 
 type Gear = (Cell, List[Number])
-extension (gear: Gear)
-  def ratio = gear._2.map(_.value).product
+extension (gear: Gear) def ratio = gear._2.map(_.value).product
 
 case class Number(value: Int, coords: List[Coord]):
   private val neighbouringRows: Set[Int] =
     coords.flatMap(coord => List(coord.x + 1, coord.x, coord.x - 1)).toSet
   private val neighbouringCols: Set[Int] =
     coords.flatMap(coord => List(coord.y + 1, coord.y, coord.y - 1)).toSet
-  def isNeighbour(cell: Cell): Boolean =
+  def isNeighbour(cell: Cell): Boolean   =
     neighbouringRows.contains(cell.coord.x) &&
-    neighbouringCols.contains(cell.coord.y)
+      neighbouringCols.contains(cell.coord.y)
 
 case class Schematic(symbols: List[Cell], numbers: List[Number]):
   val parts = numbers.filter: number =>
-      symbols.exists(number.isNeighbour)
+    symbols.exists(number.isNeighbour)
   val gears = symbols
     .filter(_.value == '*')
     .map(cell => cell -> numbers.filter(_.isNeighbour(cell)))
@@ -55,27 +54,29 @@ val example1 =
 // Changed other bits trying to spot my error and will leave those in, I'm sure
 // that it's totally over-engineered and inefficient but at least I got there 😅
 def cells(input: List[String]): List[Cell] =
-  input.indices.flatMap(x =>
-    (input(x) + ".").zipWithIndex.map: value =>
-      value._1 -> (x, value._2)
-  ).toList
+  input.indices
+    .flatMap: x =>
+      (input(x) + ".").zipWithIndex.map: value =>
+        value._1 -> (x, value._2)
+    .toList
 
 @tailrec
 def parse(input: List[Cell], symbolsFound: List[Cell] = Nil, numbersFound: List[Number] = Nil): Schematic =
-  if input.isEmpty then
-    Schematic(symbolsFound, numbersFound)
+  if input.isEmpty then Schematic(symbolsFound, numbersFound)
   else
-    val (digits, rest) = input.span(_.value.isDigit)
-    val (chars, remainder) = rest.span(!_.value.isDigit)
+    val (digits, other)    = input.span(_.value.isDigit)
+    val (chars, remainder) = other.span(!_.value.isDigit)
     parse(
       remainder,
       symbolsFound ++ chars.filter(_.value != '.'),
       if digits.isEmpty
-        then numbersFound
-        else numbersFound :+ Number(
+      then numbersFound
+      else
+        numbersFound :+ Number(
           digits.map(_.value).mkString.toInt,
           digits.map(_.coord)
-        ))
+        )
+    )
 
 val parsedExample = parse(cells(example1))
 
@@ -88,7 +89,7 @@ val parsedExample = parse(cells(example1))
 //print("Example: gears = ")
 //pprint.pprintln(parsedExample.gears)
 
-val pwd = os.Path("/Users/madetech/projects/aoc/2023/scala")
+val pwd   = os.Path("/Users/madetech/projects/aoc/2023/scala")
 val input = parse(cells(os.read(pwd / "day03.input1.txt").linesIterator.toList))
 
 def part1(schematic: Schematic): Int = schematic.parts.map(_.value).sum
