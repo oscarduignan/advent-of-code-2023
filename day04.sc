@@ -6,15 +6,12 @@ type ParsedInput = List[Array[Array[Int]]]
 
 def parse(input: String): ParsedInput =
   input.trim.linesIterator
-    .map(
+    .map:
       _.split(':').last
         .split('|')
-        .map(
-          _.split(' ')
-            .filter(_.nonEmpty)
-            .map(_.toInt)
-        )
-    )
+        .map:
+          _.split(' ').collect:
+            case n if n.nonEmpty => n.toInt
     .toList
 
 val example = parse("""
@@ -49,8 +46,8 @@ import scala.collection.mutable.ArrayBuffer
 
 def part2(input: ParsedInput) =
   case class Card(matches: Int, copies: Int = 1):
-    def createExtraCopies(n: Int): Card =
-      copy(copies = copies + n)
+    def withExtraCopiesFrom(that: Card): Card =
+      copy(copies = copies + that.copies)
 
   val cards = input
     .map:
@@ -61,12 +58,10 @@ def part2(input: ParsedInput) =
   for
     i <- cards.indices
     n <- Range.inclusive(1, cards(i).matches)
-  do cards(i + n) = cards(i + n).createExtraCopies(cards(i).copies)
+  do cards(i + n) = cards(i + n).withExtraCopiesFrom(cards(i))
 
   cards.map(_.copies).sum
 
 part2(example)
 
 println("Part02 : " + part2(input))
-
-
