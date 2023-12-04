@@ -50,3 +50,19 @@ Part01 (my inputs): 539590
 Part02 (example):   467835
 Part02 (my inputs): 80703636
 ```
+
+## Day 4
+Got caught out by not fully understanding the scoping of assignments in for/do blocks
+
+[View solution source code](day04.sc)
+
+```shell
+scala-cli day04.sc
+```
+```
+Compiling project (Scala 3.3.1, JVM (11))
+Compiled project (Scala 3.3.1, JVM (11))
+Part01 : 24848
+Part02 : 7258152
+```
+
