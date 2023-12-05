@@ -9,7 +9,10 @@ import scala.util.Using
 enum Colour:
   case blue, red, green
 type Count = Int
-case class Game(id: Int, draws: Map[Colour, Seq[Count]])
+case class Game(id: Int, draws: Map[Colour, Seq[Count]]):
+  def red   = draws.getOrElse(Colour.red, Nil)
+  def green = draws.getOrElse(Colour.green, Nil)
+  def blue  = draws.getOrElse(Colour.blue, Nil)
 
 type Games = Seq[Game]
 
@@ -32,9 +35,9 @@ extension (games: Games)
   def part1 =
     games
       .filter: game =>
-        game.draws.getOrElse(Colour.red, Nil).forall(_ <= 12) &&
-          game.draws.getOrElse(Colour.green, Nil).forall(_ <= 13) &&
-          game.draws.getOrElse(Colour.blue, Nil).forall(_ <= 14)
+        game.red.forall(_ <= 12) &&
+          game.green.forall(_ <= 13) &&
+          game.blue.forall(_ <= 14)
       .foldLeft(0)(_ + _.id)
 
 example.part1
@@ -43,7 +46,9 @@ extension (games: Games)
   def part2 =
     games
       .map: game =>
-        game.draws.getOrElse(Colour.red, Nil).max * game.draws.getOrElse(Colour.green, Nil).max * game.draws.getOrElse(Colour.blue, Nil).max
+        game.red.max
+          * game.green.max
+          * game.blue.max
       .sum
 
 example.part2
@@ -54,5 +59,6 @@ val input = Games(
     StandardCharsets.UTF_8
   )
 )
+
 println("Part 1: " + input.part1)
 println("Part 2: " + input.part2)

@@ -25,6 +25,7 @@ Part 2: 55260
 Figured it would be some thing across columns rather than rows, didn't bother filling in blanks when a row didn't have a draw of a colour and turned out I didn't need to anyway.
 
 [View solution source code](day02.sc)
+[View alternate solution source code where I used fastparse](day02.fastparse.sc)
 
 ```shell
 scala-cli day02.sc
