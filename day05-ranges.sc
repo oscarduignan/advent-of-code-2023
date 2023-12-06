@@ -1,7 +1,5 @@
 //> using scala 3
 //> using dep "com.lihaoyi::fastparse:3.0.2"
-//> using dep "com.lihaoyi::pprint:0.8.1"
-//> using dep "org.scala-lang.modules::scala-parallel-collections:1.0.4"
 
 import scala.annotation.tailrec
 import scala.collection.immutable.NumericRange
