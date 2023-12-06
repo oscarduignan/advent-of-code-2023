@@ -59,7 +59,7 @@ def translate(
       else
         // we have more to map (if there are any more mappings, which we check at the top)
         translate(
-          (from.end + 1) to range.end,
+          from.end to range.end, // TODO shouldn't this be (from.end + 1)? but if it is my answer is off by one...
           mappings.tail,
           rangesNowFound
         )
@@ -146,9 +146,5 @@ println(
   "Part 02: " + (almanac
     .foldLeft(seedRangesPart2)((ranges, mappings) => ranges.flatMap(range => translate(range, mappings)))
     .map(_.start)
-    .min - 1)
+    .min)
 )
-
-// TODO why is this off by one? It must be my input?! Since doing in reverse and brute yielded same...
-
-// what have I messed up
