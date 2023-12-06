@@ -22,7 +22,7 @@ def translate(
       // no more to translate because our mappings are sorted
       rangesPreviouslyFound :+ range
     else if range.start > from.end then
-      // we can't being with this mapping
+      // we can't begin with this mapping
       translate(range, mappings.tail) // omitted translated because it will always be Nil here
     else
 
